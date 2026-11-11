@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Generated data (park table, geodata copies)
+data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# Local configuration and secrets
+*.local.conf
+.env
+
+# Editor and OS noise
+.DS_Store
+.idea/
+.vscode/

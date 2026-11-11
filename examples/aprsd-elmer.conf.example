@@ -1,0 +1,100 @@
+# ELMER — example aprsd configuration
+#
+# Copy to /etc/aprsd/aprsd.conf, replace the callsign and the passcode.
+# Every key below is a real aprsd 4.2.4 option except the [elmer] group,
+# which is proposed by the plugin package in this repository.
+
+[DEFAULT]
+# The station. The SSID separates ELMER from the BBS's own APRS login.
+callsign = EA7KLK-10
+
+# Set this list explicitly. aprsd's built-in default references
+# aprsd.plugins.location.LocationPlugin, which is not in the core package.
+enabled_plugins = aprsd.plugins.ping.PingPlugin, aprsd_elmer.plugins.bm.BMPlugin, aprsd_elmer.plugins.near.NearPlugin, aprsd_elmer.plugins.test.ContestPlugin
+
+# Built-in help for "h" / "help".
+load_help_plugin = true
+
+# Persist the packet tracker and watch list between restarts.
+enable_save = true
+save_location = /var/lib/aprsd
+
+units = metric
+
+# Network protection. Leave these at the upstream defaults.
+msg_rate_limit_period = 2
+ack_rate_limit_period = 1
+default_packet_send_count = 3
+default_ack_send_count = 3
+packet_dupe_timeout = 300
+
+# ELMER does not transmit a position of its own.
+enable_beacon = false
+
+enable_seen_list = true
+enable_packet_logging = true
+enable_sending_ack_packets = true
+log_packet_format = compact
+is_digipi = false
+
+
+[aprs_network]
+enabled = true
+
+# Base callsign only. aprslib strips the SSID before computing the passcode,
+# so the same passcode works for EA7KLK and EA7KLK-10.
+login = EA7KLK
+
+# Not in this file in production. Inject from the secret store.
+password = REPLACE_WITH_APRS_IS_PASSCODE
+
+# European Tier 2 rotation. The upstream default, noam.aprs2.net, is wrong
+# for a station in Spain.
+host = euro.aprs2.net
+port = 14580
+
+
+[watch_list]
+# The presence worker uses its own subscription list (see [elmer]); aprsd's
+# watch list stays off so the two mechanisms cannot disagree.
+enabled = false
+callsigns = EA7ABC, EA7XYZ
+alert_callsign = EA7KLK
+alert_time_seconds = 3600
+packet_keep_count = 10
+
+
+[registry]
+# Publishes service uptime to the APRS registry. Off until the station has
+# been running long enough to be worth announcing.
+enabled = false
+
+
+[elmer]
+# --- proposed plugin options ---
+
+# bminfo last-heard endpoint (see docs/data-sources.md).
+lastheard_url =
+lastheard_token =
+lastheard_stale_after_seconds = 1800
+lastheard_lookback_hours = 24
+
+# SpatiaLite dataset and the precomputed park table.
+geodata_path = /usr/share/elmer/spain_boundaries.sqlite
+spatialite_extension = mod_spatialite
+parks_path = /usr/share/elmer/parks.sqlite
+near_park_radius_km = 25
+
+# Contestmaster public API.
+contest_url =
+contest_horizon_days = 30
+
+# Per-sender token bucket, applied inside each plugin.
+sender_burst = 3
+sender_refill_seconds = 60
+
+# Presence push. Empty means the worker does not start.
+push_enabled = false
+push_subscribers =
+push_optout_callsigns =
+push_min_interval_seconds = 21600
