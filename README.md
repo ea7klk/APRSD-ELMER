@@ -178,4 +178,9 @@ Documented in full in [docs/risks.md](docs/risks.md). The short version:
 
 ## Licence
 
-Not yet chosen. Nothing here is distributed for reuse until that is settled.
+Copyright © 2026 Volker Kerkhoff. Licensed under
+[CC BY-SA 4.0](LICENSE) — `SPDX-License-Identifier: CC-BY-SA-4.0`.
+
+This repository contains design documentation only. If an implementation is
+added, the plugin package should carry a software licence — `aprsd` itself is
+Apache-2.0 — in addition to this one covering the prose.

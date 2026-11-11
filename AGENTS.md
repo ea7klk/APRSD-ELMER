@@ -57,6 +57,12 @@ The roadmap in `README.md` starts with stock `aprsd` and no ELMER code. Keep
 that ordering: phase 0 exists so the plugin contract, the APRS-IS session and
 the deployment path are proven before any custom plugin is written.
 
+## Licence
+
+The repository is licensed CC BY-SA 4.0 (`LICENSE`). Documentation changes
+inherit it; a future implementation package should declare its own software
+licence rather than relying on this one.
+
 ## Secrets
 
 Never commit APRS-IS passcodes, service tokens, or callsign-specific
